@@ -30,10 +30,13 @@
     "repositories": [
         {
             "type": "vcs",
-            "url": "https://github.com/sanjuro/PushcommerceApi.giti"
+            "url": "https://github.com/sanjuro/PushcommerceApi.git"
         }
     ],
     "autoload": {
+        "classmap": [
+            "lib/"
+        ],
         "psr-4": { "Pushcommerce\\": "lib/" }
     }
 }
