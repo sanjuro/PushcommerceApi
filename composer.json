@@ -29,19 +29,12 @@
     },
     "repositories": [
         {
-            "type": "package",
-            "package": {
-                "name": "pushcommerce/php-pushcommerce-api",
-                "version": "dev-master",
-                "source": {
-                    "url": "git://github.com/sanjuro/PushcommerceApi.git",
-                    "type": "git",
-                    "reference": "master"
-                },
-                "autoload": {
-                    "psr-4": { "Pushcommerce\\": "lib/Pushcommerce/" }
-                },
-            }
+            "type": "vcs",
+            "url": "https://github.com/sanjuro/PushcommerceApi.giti"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-4": { "Pushcommerce\\": "lib/Pushcommerce/" }
+    },
+  ]
 }
