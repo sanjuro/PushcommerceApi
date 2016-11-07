@@ -4,6 +4,7 @@ namespace Pushcommerce;
 
 use Pushcommerce\Api\ApiInterface;
 use Pushcommerce\Exception\InvalidArgumentException;
+use Pushcommerce\HttpClient\Plugin\PushcommerceExceptionThrower;
 use Pushcommerce\Exception\BadMethodCallException;
 use Pushcommerce\HttpClient\Plugin\Authentication;
 use Pushcommerce\HttpClient\Plugin\History;
@@ -111,7 +112,7 @@ class Client
         $this->streamFactory = StreamFactoryDiscovery::find();
 
         $this->responseHistory = new History();
-        $this->addPlugin(new PushCommerceExceptionThrower());
+        $this->addPlugin(new PushcommerceExceptionThrower());
         $this->addPlugin(new Plugin\HistoryPlugin($this->responseHistory));
         $this->addPlugin(new Plugin\RedirectPlugin());
         $this->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri('https://api.pushcommerce.com')));

@@ -34,9 +34,8 @@
         }
     ],
     "autoload": {
-        "classmap": [
-            "lib/"
-        ],
-        "psr-4": { "Pushcommerce\\": "lib/" }
+        "psr-4": {
+            "Pushcommerce\\": "src"
+        }
     }
 }
