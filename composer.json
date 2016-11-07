@@ -34,7 +34,6 @@
         }
     ],
     "autoload": {
-        "psr-4": { "Pushcommerce\\": "lib/Pushcommerce/" }
-    },
-  ]
+        "psr-4": { "Pushcommerce\\": "lib/" }
+    }
 }
