@@ -19,7 +19,7 @@ class Search extends AbstractApi
      */
     public function customers($q, $sort = 'updated', $order = 'desc')
     {
-        return $this->get('/search/customers', array('q' => $q, 'sort' => $sort, 'order' => $order));
+        return $this->get('/customers', array('q' => $q, 'sort' => $sort, 'order' => $order));
     }
 
     /**
@@ -33,7 +33,7 @@ class Search extends AbstractApi
      */
     public function orders($q, $sort = 'updated', $order = 'desc')
     {
-        return $this->get('/search/orders', array('q' => $q, 'sort' => $sort, 'order' => $order));
+        return $this->get('/orders', array('q' => $q, 'sort' => $sort, 'order' => $order));
     }
 
     /**
@@ -47,6 +47,6 @@ class Search extends AbstractApi
      */
     public function products($q, $sort = 'updated', $order = 'desc')
     {
-        return $this->get('/search/products', array('q' => $q, 'sort' => $sort, 'order' => $order));
+        return $this->get('/products', array('q' => $q, 'sort' => $sort, 'order' => $order));
     }
 }

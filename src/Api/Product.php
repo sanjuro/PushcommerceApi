@@ -18,6 +18,19 @@ class Product extends AbstractApi
      */
     public function all(array $params = array())
     {
-        return $this->get('/products/'.array_merge(array('page' => 1), $params));
+        return $this->get('/products/' . array_merge(array('page' => 1), $params));
+    }
+
+    /**
+     * Get extended information about a prouduct
+     *
+     *
+     * @param string $product_handle the product handle
+     *
+     * @return array information about the product
+     */
+    public function show($product_handle)
+    {
+        return $this->get('/products/' . rawurlencode($product_handle));
     }
 }

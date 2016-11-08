@@ -118,7 +118,7 @@ class Client
         $this->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri('https://api.pushcommerce.com')));
 
         $this->apiVersion = $apiVersion ?: 'v1';
-        $this->addHeaders(['Accept' => sprintf('application/vnd.pushcommerce.%s+json', $this->apiVersion)]);
+        $this->addHeaders(['Accept' => sprintf('application/json', $this->apiVersion)]);
 
         if ($enterpriseUrl) {
             $this->setEnterpriseUrl($enterpriseUrl);
@@ -164,6 +164,10 @@ class Client
             case 'user':
             case 'users':
                 $api = new Api\User($this);
+                break;
+
+            case 'search':
+                $api = new Api\Search($this);
                 break;
 
             case 'authorization':
@@ -277,7 +281,7 @@ class Client
     public function clearHeaders()
     {
         $this->headers = array(
-            'Accept' => sprintf('application/vnd.pushcommerce.%s+json', $this->getApiVersion()),
+            'Accept' => 'application/json',
         );
 
         $this->removePlugin(Plugin\HeaderAppendPlugin::class);

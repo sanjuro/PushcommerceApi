@@ -26,11 +26,19 @@ abstract class AbstractApi implements ApiInterface
     protected $perPage;
 
     /**
+     * The base pathe for an call
+     *
+     * @var null|int
+     */
+    protected $path;
+
+    /**
      * @param Client $client
      */
     public function __construct(Client $client)
     {
         $this->client = $client;
+        $this->path = '/api/' . $this->client->getApiVersion(); 
     }
 
     public function configure()
@@ -65,7 +73,7 @@ abstract class AbstractApi implements ApiInterface
      * @return array|string
      */
     protected function get($path, array $parameters = array(), $requestHeaders = array())
-    {
+    {   
         if (null !== $this->perPage && !isset($parameters['per_page'])) {
             $parameters['per_page'] = $this->perPage;
         }
@@ -76,8 +84,8 @@ abstract class AbstractApi implements ApiInterface
         if (count($parameters) > 0) {
             $path .= '?'.http_build_query($parameters);
         }
-
-        $response = $this->client->getHttpClient()->get($path, $requestHeaders);
+       
+        $response = $this->client->getHttpClient()->get($this->path . $path, $requestHeaders);
 
         return ResponseMediator::getContent($response);
     }
@@ -97,7 +105,7 @@ abstract class AbstractApi implements ApiInterface
             unset($parameters['ref']);
         }
 
-        $response = $this->client->getHttpClient()->head($path.'?'.http_build_query($parameters), $requestHeaders);
+        $response = $this->client->getHttpClient()->head($this->path .  $path . '?' . http_build_query($parameters), $requestHeaders);
 
         return $response;
     }
@@ -112,7 +120,7 @@ abstract class AbstractApi implements ApiInterface
     protected function post($path, array $parameters = array(), $requestHeaders = array())
     {
         return $this->postRaw(
-            $path,
+            $this->path . $path,
             $this->createJsonBody($parameters),
             $requestHeaders
         );
@@ -130,7 +138,7 @@ abstract class AbstractApi implements ApiInterface
     protected function postRaw($path, $body, $requestHeaders = array())
     {
         $response = $this->client->getHttpClient()->post(
-            $path,
+            $this->path . $path,
             $requestHeaders,
             $body
         );
@@ -148,7 +156,7 @@ abstract class AbstractApi implements ApiInterface
     protected function patch($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->client->getHttpClient()->patch(
-            $path,
+            $this->path . $path,
             $requestHeaders,
             $this->createJsonBody($parameters)
         );
@@ -166,7 +174,7 @@ abstract class AbstractApi implements ApiInterface
     protected function put($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->client->getHttpClient()->put(
-            $path,
+            $this->path . $path,
             $requestHeaders,
             $this->createJsonBody($parameters)
         );
@@ -184,7 +192,7 @@ abstract class AbstractApi implements ApiInterface
     protected function delete($path, array $parameters = array(), $requestHeaders = array())
     {
         $response = $this->client->getHttpClient()->delete(
-            $path,
+            $this->path . $path,
             $requestHeaders,
             $this->createJsonBody($parameters)
         );
