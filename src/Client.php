@@ -48,16 +48,21 @@ class Client
     const AUTH_HTTP_TOKEN = 'http_token';
 
     /**
+     * URL for the dev shop
+     */
+    const URL_DEV_API = 'http://qtail.dev';
+
+    /**
      * @var string
      */
     private $apiVersion;
 
     /**
-     * The object that sends HTTP messages
+     * The url of the api
      *
-     * @var HttpClient
+     * @var string
      */
-    private $httpClient;
+    private $enterpriseUrl;
 
     /**
      * A HTTP client with all our plugins
@@ -111,18 +116,21 @@ class Client
         $this->messageFactory = MessageFactoryDiscovery::find();
         $this->streamFactory = StreamFactoryDiscovery::find();
 
-        $this->responseHistory = new History();
-        $this->addPlugin(new PushcommerceExceptionThrower());
-        $this->addPlugin(new Plugin\HistoryPlugin($this->responseHistory));
-        $this->addPlugin(new Plugin\RedirectPlugin());
-        $this->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri('https://api.pushcommerce.com')));
-
         $this->apiVersion = $apiVersion ?: 'v1';
         $this->addHeaders(['Accept' => sprintf('application/json', $this->apiVersion)]);
 
         if ($enterpriseUrl) {
             $this->setEnterpriseUrl($enterpriseUrl);
+        } else {
+            $this->setEnterpriseUrl(self::URL_DEV_API);
         }
+
+        $this->responseHistory = new History();
+        $this->addPlugin(new PushcommerceExceptionThrower());
+        $this->addPlugin(new Plugin\HistoryPlugin($this->responseHistory));
+        $this->addPlugin(new Plugin\RedirectPlugin());
+        $this->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($this->getEnterpriseUrl($enterpriseUrl))));
+
     }
 
     /**
@@ -273,6 +281,22 @@ class Client
     public function getApiVersion()
     {
         return $this->apiVersion;
+    }
+
+    /**
+     * @param string $enterpriseUrl
+     */
+    public function setEnterpriseUrl($enterpriseUrl)
+    {
+        $this->enterpriseUrl = $enterpriseUrl;
+    }
+
+    /**
+     * @return string
+     */
+    public function getEnterpriseUrl()
+    {
+        return $this->enterpriseUrl;
     }
 
     /**
