@@ -129,7 +129,7 @@ class Client
         $this->addPlugin(new PushcommerceExceptionThrower());
         $this->addPlugin(new Plugin\HistoryPlugin($this->responseHistory));
         $this->addPlugin(new Plugin\RedirectPlugin());
-        $this->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($this->getEnterpriseUrl($enterpriseUrl))));
+        $this->addPlugin(new Plugin\AddHostPlugin(UriFactoryDiscovery::find()->createUri($this->getEnterpriseUrl())));
 
     }
 

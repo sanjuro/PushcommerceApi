@@ -60,7 +60,7 @@ class Authentication implements Plugin
                 $uri = $request->getUri();
                 $query = $uri->getQuery();
 
-                $parameters = array('access_token' => $this->tokenOrLogin);
+                $parameters = array('api_secret' => $this->tokenOrLogin);
 
                 $query .= empty($query) ? '' : '&';
                 $query .= utf8_encode(http_build_query($parameters, '', '&'));
