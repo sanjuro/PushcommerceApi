@@ -1,6 +1,5 @@
 {
     "name": "pushcommerce/php-pushcommerce-api",
-    "type": "library",
     "description": "Api Wrapper for PushCommerce API",
     "minimum-stability": "dev",
     "prefer-stable": true,
